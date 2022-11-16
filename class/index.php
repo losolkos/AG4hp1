@@ -5,7 +5,7 @@ $user = new User('jkowalski', 'tajnehasło');
 if($user->register()){
     echo "zarajestrowano poprawnie";
 } else {
-    echo "błąd rejestracji użytkownika"
+    echo "błąd rejestracji użytkownika";
 }
 
 if($user->login()){
