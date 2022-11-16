@@ -15,11 +15,11 @@ class User {
     }
 
     public function register() {
-        $PasswordHash = password_hash($this->password, PASSWORD_ARGON2I);
-        $q = "INSERT INTO user VALUES (NULL, ?, ?, ?, ?)";
-        $db = new mysqli('localhost', 'root', '', 'loginform');
+        $PasswordHash = password_hash($this->Password, PASSWORD_ARGON2I);
+        $q = "INSERT INTO userclass VALUES (NULL, ?, ?, ?, ?)";
+        $db = new mysqli ('localhost', 'root', '', 'loginForm');
         $preparedQuery = $db->prepare($q);
-        $preparedQuery->bind_param('aaaa', $this->Login, $PasswordHash, $this->FirstName, $LastName);
+        $preparedQuery->bind_param('ssss', $this->Login, $PasswordHash, $this->FirstName, $LastName);
     }
     
         
