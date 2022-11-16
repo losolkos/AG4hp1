@@ -17,14 +17,14 @@ class User {
     public function register() {
         $PasswordHash = password_hash($this->Password, PASSWORD_ARGON2I);
         $q = "INSERT INTO userclass VALUES (NULL, ?, ?, ?, ?)";
-        $db = new mysqli ('localhost', 'root', '', 'loginForm');
+        $db = new mysqli ('localhost', 'root', '', 'loginform');
         $preparedQuery = $db->prepare($q);
-        $preparedQuery->bind_param('', $this->Login, $PasswordHash, $this->FirstName, $LastName);
+        $preparedQuery->bind_param('ssss', $this->Login, $PasswordHash, $this->FirstName, $LastName);
     }
 
-    public function login() {
+    public function Login() {
        $query = "SELECT * FROM userclass WHERE login = ? LIMIT 1";
-       $db = new mysqli ('localhost', 'root', '', 'loginForm');
+       $db = new mysqli ('localhost', 'root', '', 'loginform');
        $preparedQuery = $db->prepare($query);
        $preparedQuery->bind_param('s', $this->Login);
        $preparedQuery->execute();
@@ -46,6 +46,15 @@ class User {
        else{
         return false;
        }
+    }
+    public function setFirstName(string $FirstName){
+        $this->FirstName = $FirstName;
+    }
+    public function setLastName(string $LastName){
+        $this->LastName = $LastName;
+    }
+    public function getName() : string{
+      return $this->FirstName . " " .  $this->lastName;
     }
     
         
