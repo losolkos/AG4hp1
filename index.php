@@ -89,5 +89,18 @@ Route::add('/logout', function() {
 
 });
 
+/*Route::add('/profile', function() {
+    global $twig;
+    $user = $_SESSION['user'];
+    $fullName = $user->getName();
+    $fullName = explode(" ", $fullName);
+    $v = array('user' => $user, 'FristName' => $fullName[0], 'LastName' => $fullName[1]
+    //$twig-> ('profile.html.twig', $v);
+    $twig->display('profile.html.twig');
+
+);
+
+});*/
+
 Route::run('/AG4HP');
 ?>

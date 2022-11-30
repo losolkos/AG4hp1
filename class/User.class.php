@@ -58,6 +58,18 @@ class User {
     public function getName() : string{
       return $this->FirstName . " " .  $this->LastName;
     }
+
+    public function save() : bool {
+        $p = "UBDATE user SET
+        FirstName = ?
+        LastName = ?
+        WHERE ID = ?";
+    $preparedQuery = $this->dq->prepare($q);
+    $preparedQuery->bind_param("ssi", $this->FirstName, $this->ID);
+    return $preparedQuery->execute;
+
+
+    }
     
         
     
