@@ -1,0 +1,6 @@
+{% include 'header.html.twig' %}
+Strona Główna
+     {% if user is defined %}
+         jesteś zalogowany jako: {{user.getName()}} <a href="/AG4HP/logout/">Wyloguj</a>
+     {% endif %}
+{% include 'footer.html.twig' %}
