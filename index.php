@@ -55,7 +55,7 @@ Route::add('/register', function () {
     if (isset($_REQUEST['login']) && isset($_REQUEST['password'])) {
         if (
             empty($_REQUEST['login']) || empty($_REQUEST['password'])
-            || empty($_REQUEST['firstName']) || empty($_REQUEST['lastName'])
+            || empty($_REQUEST['FirstName']) || empty($_REQUEST['lastName'])
         ) {
             $twig->display(
                 'register.html.twig',
@@ -64,7 +64,7 @@ Route::add('/register', function () {
             exit();
         }
         $user = new User($_REQUEST['login'], $_REQUEST['password']);
-        $user->setFirstName($_REQUEST['firstName']);
+        $user->setFirstName($_REQUEST['FirstName']);
         $user->setLastName($_REQUEST['lastName']);
         if ($user->register()) {
             $twig->display(
@@ -103,10 +103,27 @@ Route::add('/profile', function() {
     global $twig;
     if(isset($_REQUEST['FirstName']) && isset($_REQUEST['LastName'])) {
         $user = $_SESSION['user'];
-        $user->setfirstName($_REQUEST['FirstName']);
-        $user->setlastName($_REQUEST['LastName']);
+        $user->setFirstName($_REQUEST['FirstName']);
+        $user->setLastName($_REQUEST['LastName']);
         $user->save();
-        $twig->display('message.html.twig', ['message' => "Zapisano zmiany w profilu"]);
+        $twig->display('message.html.twig', 
+        ['message' => "Zapisano zmiany w profilu"]);
+
+    }
+    if (isset($_REQUEST['Password']) && isset($_REQUEST['passwordRepeat'])) {
+        $Password = $_REQUEST['Password'];
+        $passwordRepeat = $_REQUEST['passwordRepeat'];
+        if($Password == $passwordRepeat) {
+            $user = $_SESSION['user'];
+            if($user->changePassword($Password)) {
+                $twig->display('message.html.twig', ['message' => "Hasło zostało zmienione"]);
+            } else{
+                $twig->display('message.html.twig', ['message' => "padane hasła nie są zgodne"]);
+            }
+        
+        }else{
+            $twig->display('message.html.twig', ['message' => " Podane hasła nie są zgodne"]);
+        }
 
     }
 

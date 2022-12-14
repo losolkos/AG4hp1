@@ -84,7 +84,7 @@ class User {
     }
 
     public function save() : bool {
-        $q = "UBDATE user SET
+        $q = "UPDATE userclass SET
         FirstName = ?,
         LastName = ?
         WHERE ID = ?";
@@ -94,6 +94,16 @@ class User {
 
 
     }
+    public function changePassword(string $newPassword) : bool {
+        $newPassword = password_hash($newPassword, PASSWORD_ARGON2I);
+        $q = "UPDATE userclass SET
+        Password = ?
+        WHERE ID = ?";
+    $preparedQuery = $this->db->prepare($q);
+    $preparedQuery->bind_param("si", $newPassword, $this->ID);
+    return $preparedQuery->execute();
+    }
+
     
         
     

@@ -3,11 +3,18 @@
         Jesteś zalogowany jako: {{user.getName()}} 
         <form action="" method="post">
             <label for="firstNameID">Imię:</label><br>
-            <input type="text" name="firstName" id="firstNameID" value="{{firstName}}"><br>
+            <input type="text" name="FirstName" id="firstNameID" value="{{FirstName}}"><br>
             <label for="lastNameID">Nazwisko:</label><br>
-            <input type="text" name="lastName" id="lastNameID" value="{{lastName}}"><br>
+            <input type="text" name="LastName" id="lastNameID" value="{{LastName}}"><br>
             <input type="submit" value="Zapisz">
         </form>
-        <a href="/loginform/logout/">Wyloguj</a>
+        <form action="" method="post">
+            <label for="passwordID">Nowe hasło:</label><br>
+            <input type="Password" name="Password" id="passwordID"><br>
+            <label for="passwordRepeatID">Powtórz hasło:</label><br>
+            <input type="Password" name="passwordRepeat" id="passwordRepeatID"><br>
+            <input type="submit" value="Zmień hasło">
+        </form>
+        <a href="/AG4HP/logout/">Wyloguj</a>
     {% endif %}
 {% include 'footer.html.twig' %} 
