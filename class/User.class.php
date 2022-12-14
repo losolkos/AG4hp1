@@ -60,7 +60,7 @@ class User {
     }
 
     public function save() : bool {
-        $p = "UBDATE user SET
+        $q = "UBDATE user SET
         FirstName = ?
         LastName = ?
         WHERE ID = ?";
