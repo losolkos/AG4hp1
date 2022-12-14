@@ -1,18 +1,42 @@
 <?php
 class User {
-    private int $id;
+    private int $ID;
+    private mysqli $db;
     private string $Login;
     private string $Password;
     private string $FirstName;
     private string $LastName;
-
+    
+    
     public function __construct(string $Login, string $Password) {
         $this->Login = $Login;
         $this->Password = $Password;
-        $this->FirstName = $FirstName = "";
-        $this->LastName = $LastName = "";
-
+        $this->FirstName = "";
+        $this->LastName = "";
+        global $db;
+        $this->db = &$db;
     }
+    
+    
+    public function __serialize() : array {
+        return array(   
+                        'ID' => $this->ID,
+                        'Login' => $this->Login,
+                        'Password' => $this->Password,
+                        'FirstName' => $this->FirstName,
+                        'LastName' => $this->LastName,
+                    );
+    }
+    public function __unserialize(array $data) {
+        $this->ID = $data['ID'];
+        $this->Login = $data['Login'];
+        $this->Password = $data['Password'];
+        $this->FirstName = $data['FirstName'];
+        $this->LastName = $data['LastName'];
+        global $db;
+        $this->db = &$db;
+    } 
+
 
     public function register() : bool {
         $PasswordHash = password_hash($this->Password, PASSWORD_ARGON2I);
@@ -35,7 +59,7 @@ class User {
         $row = $result->fetch_assoc();
         $PasswordHash = $row['Password'];
         if(password_verify($this->Password, $PasswordHash)){
-            $this->id = $row['ID'];
+            $this->ID = $row['ID'];
             $this->FirstName = $row['FirstName'];
             $this->LastName = $row['LastName'];
             return true; 
@@ -61,12 +85,12 @@ class User {
 
     public function save() : bool {
         $q = "UBDATE user SET
-        FirstName = ?
+        FirstName = ?,
         LastName = ?
         WHERE ID = ?";
-    $preparedQuery = $this->dq->prepare($q);
-    $preparedQuery->bind_param("ssi", $this->FirstName, $this->ID);
-    return $preparedQuery->execute;
+    $preparedQuery = $this->db->prepare($q);
+    $preparedQuery->bind_param("ssi", $this->FirstName,$this->LastName, $this->ID);
+    return $preparedQuery->execute();
 
 
     }

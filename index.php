@@ -89,18 +89,29 @@ Route::add('/logout', function() {
 
 });
 
-/*Route::add('/profile', function() {
+Route::add('/profile', function() {
     global $twig;
     $user = $_SESSION['user'];
     $fullName = $user->getName();
     $fullName = explode(" ", $fullName);
-    $v = array('user' => $user, 'FristName' => $fullName[0], 'LastName' => $fullName[1]
-    //$twig-> ('profile.html.twig', $v);
-    $twig->display('profile.html.twig');
+    $v = array('user' => $user, 'FristName' => $fullName[0], 'LastName' => $fullName[1]);
+    $twig->display('profile.html.twig', $v);
 
-);
+});
 
-});*/
+Route::add('/profile', function() {
+    global $twig;
+    if(isset($_REQUEST['FirstName']) && isset($_REQUEST['LastName'])) {
+        $user = $_SESSION['user'];
+        $user->setfirstName($_REQUEST['FirstName']);
+        $user->setlastName($_REQUEST['LastName']);
+        $user->save();
+        $twig->display('message.html.twig', ['message' => "Zapisano zmiany w profilu"]);
+
+    }
+
+
+}, "post");
 
 Route::run('/AG4HP');
 ?>
